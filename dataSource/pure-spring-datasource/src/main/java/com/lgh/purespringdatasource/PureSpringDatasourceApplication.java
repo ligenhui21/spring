@@ -13,12 +13,11 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
+@Slf4j
 public class PureSpringDatasourceApplication{
 
 	@Autowired
@@ -35,20 +34,18 @@ public class PureSpringDatasourceApplication{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-//		try {
-//			new PureSpringDatasourceApplication().showDataSource();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-		PureSpringDatasourceApplication application = applicationContext.getBean("pureSpringDatasourceApplication", PureSpringDatasourceApplication.class);
-		application.showDatas();
+		PureSpringDatasourceApplication applicationBean = applicationContext.getBean("pureSpringDatasourceApplication", PureSpringDatasourceApplication.class);
+		log.info("11111");
+		log.info("dataSource：----》"+applicationBean.dataSource);
+		log.info("jdbcTemplate：-----》"+applicationBean.jdbcTemplate);
+		applicationBean.showDatas();
 	}
 
 	@Bean(destroyMethod = "close")
 	public DataSource dataSource() throws Exception {
 		Properties properties = new Properties();
 		properties.setProperty("driverClassName", "com.mysql.cj.jdbc.Driver");
-		properties.setProperty("url", "jdbc:mysql://localhost:3306/mybatis?serverTimezone=UTC");
+		properties.setProperty("url", "jdbc:mysql://localhost:3306/test?serverTimezone=UTC");
 		properties.setProperty("username", "root");
 		properties.setProperty("password", "ligenhui");
 		return BasicDataSourceFactory.createDataSource(properties);
@@ -74,8 +71,17 @@ public class PureSpringDatasourceApplication{
 	}
 
 	public void showDatas(){
-		System.out.println(jdbcTemplate);
-		jdbcTemplate.queryForList("SELECT * FROM author").forEach(row -> System.out.println(row.toString()));
+		jdbcTemplate.queryForList("SELECT * FROM author").forEach(row -> log.info(row.toString()));
+	}
+
+	public void showDatas2(){
+		try {
+			dataSource = new PureSpringDatasourceApplication().dataSource();
+			jdbcTemplate = new JdbcTemplate(dataSource);
+			new PureSpringDatasourceApplication().showDatas();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
