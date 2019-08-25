@@ -1,0 +1,3 @@
+spring声明式事务使用示例
+
+注意事务的传播性，参看FooServiceImpl.java
