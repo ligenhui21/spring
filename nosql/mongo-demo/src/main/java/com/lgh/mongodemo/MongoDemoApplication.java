@@ -44,10 +44,10 @@ public class MongoDemoApplication implements ApplicationRunner {
 				.price(Money.of(CurrencyUnit.of("CNY"), 30.0))
 				.createTime(new Date())
 				.updateTime(new Date()).build();
-		/*Coffee saved = mongoTemplate.save(coffee);
-		log.info("coffee：{}", saved);*/
-		List<Coffee> list = mongoTemplate.find(Query.query(Criteria.where("name").in("拿铁", "测试咖啡")), Coffee.class);
+		Coffee saved = mongoTemplate.save(coffee);
+		log.info("coffee：{}", saved);
+		/*List<Coffee> list = mongoTemplate.find(Query.query(Criteria.where("name").in("拿铁", "测试咖啡")), Coffee.class);
 		log.info("list的数量：{}", list.size());
-		list.forEach(c -> log.info("coffee：{}", c));
+		list.forEach(c -> log.info("coffee：{}", c));*/
 	}
 }
