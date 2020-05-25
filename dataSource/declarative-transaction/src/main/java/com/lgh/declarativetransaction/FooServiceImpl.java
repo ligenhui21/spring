@@ -40,7 +40,7 @@ public class FooServiceImpl implements FooService {
      * 被调用方法事务的传播特性是REQUIRES_NEW时，内部方法和外部方法互不影响
      * 被调用方法事务的传播特性是NESTED时
      * 1、内部方法出现异常回滚时不会影响到外部方法的事务
-     * 2、外部方法出现异常回滚时会影响到内部方法的事务，内部方法也会回滚
+     * 2、外部方法出现异常回滚时会影响到内部方法的事务，内部方法也会回滚（默认传播特性时外部方法回滚时，内部方法也会回滚，两个处于同一个事务）
      * @throws RollBackException
      */
     @Override
