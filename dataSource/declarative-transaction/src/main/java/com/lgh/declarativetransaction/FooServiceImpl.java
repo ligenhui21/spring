@@ -37,6 +37,7 @@ public class FooServiceImpl implements FooService {
     /**
      * 如果加上@Transactional注解，这个方法方法将处于一个事务中，如果遇到异常会进行回滚
      * 如果不加@Transactional注解，将使用数据库的隐式事务，在执行过sql语句之后就执行commit
+     * catch住异常之后一定要往外抛，否则异常不会回滚
      *
      *
      * 内部方法：被调用方法
